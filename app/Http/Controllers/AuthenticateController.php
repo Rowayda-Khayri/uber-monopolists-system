@@ -15,7 +15,6 @@ use App\Driver;
 
 class AuthenticateController extends Controller
 {
-    
     private $driver;
     private $jwtauth;
     
@@ -112,8 +111,9 @@ class AuthenticateController extends Controller
             return stripslashes($json);
         }
         
-        $content->token = $token;
         // if no errors are encountered we can return a JWT
+        
+        $content->token = $token;
         
         header('Content-Type: application/json', true);
         
