@@ -56,25 +56,50 @@ class DriverController extends Controller {
     
     public function getMonopolists($time) {
         
+        //calculate monopolists
         
+        $tripsCounter = TripCounter::find(1)->get(['counter'])->first();
         
+//        dd($tripsCounter);
+        $monopolists = array();
         
-        if ($time == 1) { //month
+        $drivers = Driver::query()
+                ->get([
+                    'id',
+                    'trips_counter'
+                ]);
+        
+        $monopolistCriterion = 10 * $tripsCounter->counter/ 100;
+        
+        foreach ($drivers as $driver) {
             
-        }else if ($time ==2) { //year
-            
-        }else { //all time
-            
+            if ($driver->trips_counter >= $monopolistCriterion){
+                array_push($monopolists, $driver);
+            }
         }
+        
+        
+        
+//        if ($time == 1) { //month
+//            
+//        }else if ($time ==2) { //year
+//            
+//        }else { //all time
+//            
+//        }
+        
+        $content = json_decode("{}"); // to return it as empty object not string if there are no content
+        $content->monopolists = $monopolists;
         
         header('Content-Type: application/json', true);
         
         $json = response::json([
             "msg"=>'success',
             "errorMsgs"=> null,
-            "content"=> null
+            "content"=> $content
         ])->getContent();
-        
+    
+        return stripslashes($json);
     }
            
 }
