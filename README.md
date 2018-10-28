@@ -1,5 +1,3 @@
-# uber-monopolists-system
-
 ## Server Requirements:
 
 - PHP >= 7.1.3
@@ -11,7 +9,7 @@
 - Ctype PHP Extension
 - JSON PHP Extension
 
-##Deployment Instructions:
+## Deployment Instructions:
 
 - First, you should clone this repo on your document root.
 
@@ -42,4 +40,16 @@ php artisan migrate
 ```
 php artisan db:seed
 ```
+## Web Services:
+```
+|      Resource        | Method |               Parameters                       |           Headers              |
+| -------------------- | ------ | ---------------------------------------------- | ------------------------------ |
+| /register            | POST   |*email, *password, *password_confirmation, name |                                |
+| /login               | POST   |*email, *password                               |                                |
+| /logout              | GET    |                                                | Authorization : Bearer <TOKEN> |
+| /trip/accept         | POST   |                                                | Authorization : Bearer <TOKEN> |
+| /monopolists/{time}  | GET    |                                                |                                |
+
+
+
 
