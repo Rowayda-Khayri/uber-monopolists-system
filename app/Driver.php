@@ -4,11 +4,15 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+
+class Driver extends Authenticatable
 {
     use Notifiable;
-
+    use SoftDeletes;
+    
+    protected $table = 'drivers';
     /**
      * The attributes that are mass assignable.
      *
@@ -26,4 +30,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function trips(){
+        
+        return $this->hasMany('App\Trip');
+    }
 }
