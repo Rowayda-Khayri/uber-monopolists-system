@@ -13,6 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+/*****registration*****/
+////params : 
+// *name , *email , *password , *password_confirmation , *positionID , managerID(if positionID ==2)
+Route::post('/register', 'AuthenticateController@register');
+
+/******login******/
+////params: 
+// *email , *password 
+Route::post('/login', 'AuthenticateController@login');
+
+/******logout******/
+Route::get('/logout', 'AuthenticateController@logout');
