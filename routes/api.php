@@ -29,3 +29,5 @@ Route::get('/logout', 'AuthenticateController@logout');
 /*****accept trip*****/
 Route::post('/trip/accept', 'DriverController@acceptTrip');
 
+/*****monopolists*****/
+Route::get('/monopolists/{time}', 'DriverController@getMonopolists');

@@ -20,8 +20,8 @@ class DriverController extends Controller {
        // except for the login method. We don't want to prevent
        // the user from retrieving their token if they don't already have it
        $this->middleware('jwt.auth', ['except' => [
-           
-           ]]);
+           'getMonopolists'
+       ]]);
        
        $this->$driver= $driver;
        $this->jwtauth = $jwtauth;
@@ -50,4 +50,27 @@ class DriverController extends Controller {
         return stripslashes($json);
     }
     
+    public function getMonopolists($time) {
+        
+        
+        
+        
+        if ($time == 1) { //month
+            
+        }else if ($time ==2) { //year
+            
+        }else { //all time
+            
+        }
+        
+        header('Content-Type: application/json', true);
+        
+        $json = response::json([
+            "msg"=>'success',
+            "errorMsgs"=> null,
+            "content"=> null
+        ])->getContent();
+        
+    }
+           
 }
