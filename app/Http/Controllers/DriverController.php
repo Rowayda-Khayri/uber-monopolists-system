@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
 use App\Driver;
 use App\Trip;
+use App\TripCounter;
 use DateTime;
 use Response;
 
@@ -38,6 +39,9 @@ class DriverController extends Controller {
         
         //increment driver trips counter
         Driver::find($user->id)->increment('trips_counter');
+        
+        //increment trips counter
+        TripCounter::find(1)->increment('counter');
         
         header('Content-Type: application/json', true);
         
