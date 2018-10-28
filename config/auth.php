@@ -70,7 +70,7 @@ return [
             'model' => App\Driver::class,
         ],
 
-         'users' => [
+         'drivers' => [
              'driver' => 'database',
              'table' => 'drivers',
          ],

@@ -10,6 +10,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Response;
 use App\Driver;
 
 class AuthenticateController extends Controller
@@ -111,6 +112,7 @@ class AuthenticateController extends Controller
             return stripslashes($json);
         }
         
+        $content->token = $token;
         // if no errors are encountered we can return a JWT
         
         header('Content-Type: application/json', true);
