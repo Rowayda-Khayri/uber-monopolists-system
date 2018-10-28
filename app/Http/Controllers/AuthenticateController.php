@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Redirect;
 use Response;
 use App\Driver;
 
-class AuthenticateController extends Controller
-{
+class AuthenticateController extends Controller {
+    
     private $driver;
     private $jwtauth;
     
@@ -76,7 +76,6 @@ class AuthenticateController extends Controller
     }
     
     public function login(Request $request) {
-        
         
         $errors = json_decode("{}"); // to return it as empty object not string if there are no errors
         $content = json_decode("{}"); // to return it as empty object not string if there are no content

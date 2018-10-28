@@ -25,3 +25,7 @@ Route::post('/login', 'AuthenticateController@login');
 
 /******logout******/
 Route::get('/logout', 'AuthenticateController@logout');
+
+/*****accept trip*****/
+Route::post('/trip/accept', 'DriverController@acceptTrip');
+
