@@ -46,8 +46,8 @@ php artisan db:seed
 | -------------------- | ------ | ----------------------------------------------- | ------------------------------ |
 | /register            | POST   | *email, *password, *password_confirmation, name |                &nbsp;          |
 | /login               | POST   | *email, *password                               |          &nbsp;                |
-| /logout              | GET    |          &nbsp;                                 | Authorization : Bearer <TOKEN> |
-| /trip/accept         | POST   |                &nbsp;                           | Authorization : Bearer <TOKEN> |
+| /logout              | GET    |          &nbsp;                                 | Authorization : Bearer &lt;TOKEN&gt; |
+| /trip/accept         | POST   |                &nbsp;                           | Authorization : Bearer &lt;TOKEN&gt; |
 | /monopolists/{time}  | GET    |                      &nbsp;                     |    &nbsp;                      |
 
 
