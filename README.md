@@ -41,7 +41,7 @@ php artisan migrate
 php artisan db:seed
 ```
 ## Web Services:
-```
+
 |      Resource        | Method |                Parameters                       |           Headers              |
 | -------------------- | ------ | ----------------------------------------------- | ------------------------------ |
 | /register            | POST   | *email, *password, *password_confirmation, name |                &nbsp;          |
