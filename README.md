@@ -42,13 +42,13 @@ php artisan db:seed
 ```
 ## Web Services:
 ```
-|      Resource        | Method |               Parameters                       |           Headers              |
-| -------------------- | ------ | ---------------------------------------------- | ------------------------------ |
-| /register            | POST   |*email, *password, *password_confirmation, name |                &nbsp;          |
-| /login               | POST   |*email, *password                               |          &nbsp;                |
-| /logout              | GET    |         &nbsp;                                 | Authorization : Bearer <TOKEN> |
-| /trip/accept         | POST   |               &nbsp;                           | Authorization : Bearer <TOKEN> |
-| /monopolists/{time}  | GET    |                     &nbsp;                     |    &nbsp;                      |
+|      Resource        | Method |                Parameters                       |           Headers              |
+| -------------------- | ------ | ----------------------------------------------- | ------------------------------ |
+| /register            | POST   | *email, *password, *password_confirmation, name |                &nbsp;          |
+| /login               | POST   | *email, *password                               |          &nbsp;                |
+| /logout              | GET    |          &nbsp;                                 | Authorization : Bearer <TOKEN> |
+| /trip/accept         | POST   |                &nbsp;                           | Authorization : Bearer <TOKEN> |
+| /monopolists/{time}  | GET    |                      &nbsp;                     |    &nbsp;                      |
 
 
 
