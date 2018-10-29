@@ -44,11 +44,11 @@ php artisan db:seed
 ```
 |      Resource        | Method |               Parameters                       |           Headers              |
 | -------------------- | ------ | ---------------------------------------------- | ------------------------------ |
-| /register            | POST   |*email, *password, *password_confirmation, name |                                |
-| /login               | POST   |*email, *password                               |                                |
-| /logout              | GET    |                                                | Authorization : Bearer <TOKEN> |
-| /trip/accept         | POST   |                                                | Authorization : Bearer <TOKEN> |
-| /monopolists/{time}  | GET    |                                                |                                |
+| /register            | POST   |*email, *password, *password_confirmation, name |                &nbsp;          |
+| /login               | POST   |*email, *password                               |          &nbsp;                |
+| /logout              | GET    |         &nbsp;                                 | Authorization : Bearer <TOKEN> |
+| /trip/accept         | POST   |               &nbsp;                           | Authorization : Bearer <TOKEN> |
+| /monopolists/{time}  | GET    |                     &nbsp;                     |    &nbsp;                      |
 
 
 
