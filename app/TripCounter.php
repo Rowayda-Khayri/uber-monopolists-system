@@ -9,6 +9,6 @@ class TripCounter extends Model
 {
     use SoftDeletes;
     
-    protected $table = 'trips_counter';
+    protected $table = 'trips_counters';
 
 }
