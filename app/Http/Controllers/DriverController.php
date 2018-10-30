@@ -8,6 +8,7 @@ use App\Trip;
 use App\TripCounter;
 use DateTime;
 use Response;
+use DB;
 
 class DriverController extends Controller {
     
@@ -37,13 +38,21 @@ class DriverController extends Controller {
         $newTrip->save();
         
         //increment driver trips counter
-        Driver::find($user->id)->increment('trips_counter');
+        Driver::find($user->id)
+                ->update([
+                'general_trips_counter' => DB::raw('general_trips_counter + 1'),
+                'month_trips_counter' => DB::raw('month_trips_counter + 1'),
+                'year_trips_counter' => DB::raw('year_trips_counter + 1')
+            ]);
         
         //increment trips counter
         TripCounter::orderby('created_at', 'desc')
                 ->first()
-                ->increment('counter');
-        
+                ->update([
+                'general_counter' => DB::raw('general_counter + 1'),
+                'month_counter' => DB::raw('month_counter + 1'),
+                'year_counter' => DB::raw('year_counter + 1')
+            ]);
         header('Content-Type: application/json', true);
         
         $json = response::json([

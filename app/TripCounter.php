@@ -11,4 +11,14 @@ class TripCounter extends Model
     
     protected $table = 'trips_counters';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [ 
+        'general_counter', 
+        'month_counter', 
+        'year_counter'
+    ];
 }
