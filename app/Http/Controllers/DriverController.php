@@ -9,6 +9,7 @@ use App\TripCounter;
 use DateTime;
 use Response;
 use DB;
+use Carbon\Carbon;
 
 class DriverController extends Controller {
     
@@ -37,38 +38,45 @@ class DriverController extends Controller {
         $newTrip->driver_id = $user->id;
         $newTrip->save();
         
-        //increment driver trips counters
-//        Driver::find($user->id)
-//                ->update([
-//                'general_trips_counter' => DB::raw('general_trips_counter + 1'),
-//                //check month
-//                
-////                'month_trips_counter' => DB::raw('month_trips_counter + 1'),
-////                'year_trips_counter' => DB::raw('year_trips_counter + 1')
-//            ]);
+        //get current month and year
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
         
-        $currentMonth = 10;
-        $currentYear = 2018;
+        $driver = Driver::find($user->id);
         
-        $query = Driver::find($user->id);
+        /**month trips counter**/
         
-        $query->increment('general_trips_counter');
+        // check if month counter should restart from 1
+        if ($driver->updated_at->month == $currentMonth) { 
+            
+            //increment in the same month counter 
+            $driver->increment('month_trips_counter'); 
+            
+        } else { // restart month counter
+            $driver->month_trips_counter = 1;
+            $driver->updated_at = Carbon::now();
+            $driver->save();
+        }
         
-        $query->when(
-            $query->whereMonth('updated_at', $currentMonth),
-            function ($q) {
-                return $q->increment('month_trips_counter');
-            }
-        );
+        /**year trips counter**/
         
-        $query->when(
-            $query->whereYear('updated_at', $currentYear),
-            function ($q) {
-                return $q->increment('year_trips_counter');
-            }
-        );
+        // check if year counter should restart from 1
+        if ($driver->updated_at->year == $currentYear) { 
+            
+            //increment in the same year counter 
+            $driver->increment('year_trips_counter'); 
+            
+        } else { // restart year counter
+            $driver->year_trips_counter = 1;
+            $driver->updated_at = Carbon::now();
+            $driver->save();
+        }
         
-        dd($query);
+        /**general trips counter**/
+        
+        $driver->increment('general_trips_counter');
+        
+        dd($driver);
         dd('done');
         
         //increment trips counters
