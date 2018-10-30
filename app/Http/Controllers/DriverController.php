@@ -66,26 +66,7 @@ class DriverController extends Controller {
                 ->get(['counter'])
                 ->first();
         
-        $monopolists = array(); //to add monopolists
-        
-        $drivers = Driver::query()
-                ->get([
-                    'id',
-                    'name',
-                    'trips_counter'
-                ]);
-        
         $monopolistCriterion = 10 * $tripsCounter->counter / 100;
-        
-        foreach ($drivers as $driver) { 
-            
-            //check if driver is a monopolist
-            
-            if ($driver->trips_counter >= $monopolistCriterion) {
-                
-                array_push($monopolists, $driver);
-            }
-        }
         
 //        if ($time == 1) { //month
 //            
@@ -94,6 +75,16 @@ class DriverController extends Controller {
 //        }else { //all time
 //            
 //        }
+        
+        //get monopolists
+        
+        $monopolists = Driver::query()
+                ->where('trips_counter', '>=', $monopolistCriterion)
+                ->get([
+                    'id',
+                    'name',
+                    'trips_counter'
+                ]);
         
         $content->monopolists = $monopolists;
         
