@@ -53,9 +53,10 @@ class DriverController extends Controller {
             $driver->increment('month_trips_counter'); 
             
         } else { // restart month counter
+            
             $driver->month_trips_counter = 1;
-            $driver->updated_at = Carbon::now();
-            $driver->save();
+            
+            $driver->save(['timestamps'=>false]); // don't update updated_at to fix incrementing year
         }
         
         /**year trips counter**/
@@ -67,6 +68,7 @@ class DriverController extends Controller {
             $driver->increment('year_trips_counter'); 
             
         } else { // restart year counter
+            
             $driver->year_trips_counter = 1;
             $driver->updated_at = Carbon::now();
             $driver->save();
