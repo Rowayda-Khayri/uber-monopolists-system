@@ -88,7 +88,7 @@ class DriverController extends Controller {
 //            
 //        }
         
-        $content = json_decode("{}"); // to return it as empty object not string if there are no content
+        $content = json_decode("{}"); // to return it as empty object not string if there is no content
         $content->monopolists = $monopolists;
         
         header('Content-Type: application/json', true);
