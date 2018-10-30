@@ -15,17 +15,14 @@ class DriverController extends Controller {
     private $driver;
     private $jwtauth;
     
-    public function __construct(Driver $driver, JWTAuth $jwtauth){
+    public function __construct(Driver $driver, JWTAuth $jwtauth) {
         
-       // Apply the jwt.auth middleware to all methods in this controller
-       // except for the login method. We don't want to prevent
-       // the user from retrieving their token if they don't already have it
-       $this->middleware('jwt.auth', ['except' => [
+        $this->middleware('jwt.auth', ['except' => [
            'getMonopolists'
-       ]]);
+        ]]);
        
-       $this->$driver= $driver;
-       $this->jwtauth = $jwtauth;
+        $this->$driver= $driver;
+        $this->jwtauth = $jwtauth;
     }
     
     public function acceptTrip(JWTAuth $jwtAuth) {
@@ -60,7 +57,6 @@ class DriverController extends Controller {
         
         $tripsCounter = TripCounter::find(1)->get(['counter'])->first();
         
-//        dd($tripsCounter);
         $monopolists = array();
         
         $drivers = Driver::query()
@@ -73,12 +69,10 @@ class DriverController extends Controller {
         
         foreach ($drivers as $driver) {
             
-            if ($driver->trips_counter >= $monopolistCriterion){
+            if ($driver->trips_counter >= $monopolistCriterion) {
                 array_push($monopolists, $driver);
             }
         }
-        
-        
         
 //        if ($time == 1) { //month
 //            

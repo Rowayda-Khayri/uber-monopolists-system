@@ -18,37 +18,37 @@ class AuthenticateController extends Controller {
     private $driver;
     private $jwtauth;
     
-    public function __construct(Driver $driver, JWTAuth $jwtauth){
+    public function __construct(Driver $driver, JWTAuth $jwtauth) {
         
-       // Apply the jwt.auth middleware to all methods in this controller
-       // except for the login method. We don't want to prevent
-       // the user from retrieving their token if they don't already have it
-       $this->middleware('jwt.auth', ['except' => [
+        // Apply the jwt.auth middleware to all methods in this controller
+        // except for the login method. We don't want to prevent
+        // the user from retrieving their token if they don't already have it
+        $this->middleware('jwt.auth', ['except' => [
            'login',
            'register'
-           ]]);
+        ]]);
        
-       $this->$driver= $driver;
-       $this->jwtauth = $jwtauth;
+        $this->$driver = $driver;
+        $this->jwtauth = $jwtauth;
     }
   
     public function register(Request $request) {
 
-        // create the validation rules ------------------------
+        // create the validation rules
         $rules = array(                        
-            'email'            => 'required|email|unique:drivers',     
-            'password'         => 'required|min:6',
+            'email' => 'required|email|unique:drivers',     
+            'password' => 'required|min:6',
             'password_confirmation' => 'required|same:password',
         );
 
-        // do the validation ----------------------------------
+        // do the validation
         // validate against the inputs from our form
         $validator = Validator::make(Input::all(), $rules);
 
         $errors = json_decode("{}"); // to return it as empty object not string if there are no errors
         $content = json_decode("{}"); // to return it as empty object not string if there is no content
         
-        // check if the validator failed -----------------------
+        // check if the validator failed 
         if ($validator->fails()) {
 
             // get the error messages from the validator
@@ -58,15 +58,16 @@ class AuthenticateController extends Controller {
             header('Content-Type: application/json', true);
         
             $json = response::json([
-                "msg"=>'failure',
-                "errorMsgs"=> $errors,
-                "content"=> $content
+                "msg" => 'failure',
+                "errorMsgs" => $errors,
+                "content" => $content
             ])->getContent();
         
             return stripslashes($json);
 
         } else {
-            // validation successful ---------------------------
+            
+            // validation successful
 
             //save to db
             $password=Hash::make($request->input('password'));
@@ -91,6 +92,7 @@ class AuthenticateController extends Controller {
         $credentials = $request->only('email', 'password');
 
         try {
+            
             // verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
                 
@@ -99,9 +101,9 @@ class AuthenticateController extends Controller {
                 header('Content-Type: application/json', true);
 
                 $json = response::json([
-                    "msg"=>'failure',
-                    "errorMsgs"=>$errors,
-                    "content"=> $content
+                    "msg" => 'failure',
+                    "errorMsgs" => $errors,
+                    "content" => $content
                 ] , 401)->getContent();
             
                 return stripslashes($json);
@@ -110,9 +112,9 @@ class AuthenticateController extends Controller {
             
             // something went wrong
             $json = response::json([
-                "msg"=>'failure',
-                "errorMsgs"=>$errors,
-                "content"=> $content
+                "msg" => 'failure',
+                "errorMsgs" => $errors,
+                "content" => $content
             ] , 500)->getContent();
 
             return stripslashes($json);
@@ -125,9 +127,9 @@ class AuthenticateController extends Controller {
         header('Content-Type: application/json', true);
         
         $json = response::json([
-            "msg"=>'success',
-            "errorMsgs"=>$errors,
-            "content"=> $content
+            "msg" => 'success',
+            "errorMsgs" => $errors,
+            "content" => $content
         ])->getContent();
 
         return stripslashes($json);
@@ -140,9 +142,9 @@ class AuthenticateController extends Controller {
         header('Content-Type: application/json', true);
         
         $json = response::json([
-            "msg"=>'success',
-            "errorMsgs"=>null,
-            "content"=> null
+            "msg" => 'success',
+            "errorMsgs" => null,
+            "content" => null
         ])->getContent();
         
         return stripslashes($json);
