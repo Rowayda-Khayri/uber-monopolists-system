@@ -42,6 +42,10 @@ class DriverController extends Controller {
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
         
+        /*=============================================*/
+        /**********increment driver's counters*********/
+        /*=============================================*/
+        
         $driver = Driver::find($user->id);
         
         /**month trips counter**/
@@ -70,7 +74,6 @@ class DriverController extends Controller {
         } else { // restart year counter
             
             $driver->year_trips_counter = 1;
-            $driver->updated_at = Carbon::now();
             $driver->save();
         }
         
@@ -78,17 +81,48 @@ class DriverController extends Controller {
         
         $driver->increment('general_trips_counter');
         
-        dd($driver);
-        dd('done');
         
-        //increment trips counters
-        TripCounter::orderby('created_at', 'desc')
-                ->first()
-                ->update([
-                'general_counter' => DB::raw('general_counter + 1'),
-                'month_counter' => DB::raw('month_counter + 1'),
-                'year_counter' => DB::raw('year_counter + 1')
-            ]);
+        /*=============================================*/
+        /**********increment trips counters************/
+        /*=============================================*/
+        
+        $tripCounter = TripCounter::orderby('created_at', 'desc')
+                ->get()
+                ->first();
+        
+        /**month counter**/
+        
+        // check if month counter should restart from 1
+        if ($tripCounter->updated_at->month == $currentMonth) { 
+            
+            //increment in the same month counter 
+            $tripCounter->increment('month_counter'); 
+            
+        } else { // restart month counter
+            
+            $tripCounter->month_counter = 1;
+            
+            $tripCounter->save(['timestamps'=>false]); // don't update updated_at to fix incrementing year
+        }
+        
+        /**year counter**/
+        
+        // check if year counter should restart from 1
+        if ($tripCounter->updated_at->year == $currentYear) { 
+            
+            //increment in the same year counter 
+            $tripCounter->increment('year_counter'); 
+            
+        } else { // restart year counter
+            
+            $tripCounter->year_counter = 1;
+            $tripCounter->save();
+        }
+        
+        /**general trips counter**/
+        
+        $tripCounter->increment('general_counter');
+        
         header('Content-Type: application/json', true);
         
         $json = response::json([
