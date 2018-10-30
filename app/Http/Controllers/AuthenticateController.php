@@ -45,17 +45,25 @@ class AuthenticateController extends Controller {
         // validate against the inputs from our form
         $validator = Validator::make(Input::all(), $rules);
 
-
+        $errors = json_decode("{}"); // to return it as empty object not string if there are no errors
+        $content = json_decode("{}"); // to return it as empty object not string if there is no content
+        
         // check if the validator failed -----------------------
         if ($validator->fails()) {
 
             // get the error messages from the validator
 
             $errors = $validator->errors();
-
-            $errorsJSON =$errors->toJson();
-
-            return $errorsJSON;
+            
+            header('Content-Type: application/json', true);
+        
+            $json = response::json([
+                "msg"=>'failure',
+                "errorMsgs"=> $errors,
+                "content"=> $content
+            ])->getContent();
+        
+            return stripslashes($json);
 
         } else {
             // validation successful ---------------------------
@@ -78,7 +86,7 @@ class AuthenticateController extends Controller {
     public function login(Request $request) {
         
         $errors = json_decode("{}"); // to return it as empty object not string if there are no errors
-        $content = json_decode("{}"); // to return it as empty object not string if there are no content
+        $content = json_decode("{}"); // to return it as empty object not string if there is no content
 
         $credentials = $request->only('email', 'password');
 
@@ -99,12 +107,12 @@ class AuthenticateController extends Controller {
                 return stripslashes($json);
             }
         } catch (JWTException $e) {
+            
             // something went wrong
             $json = response::json([
                 "msg"=>'failure',
                 "errorMsgs"=>$errors,
                 "content"=> $content
-
             ] , 500)->getContent();
 
             return stripslashes($json);
@@ -141,7 +149,6 @@ class AuthenticateController extends Controller {
 
     }
     
-   
 }
 
 

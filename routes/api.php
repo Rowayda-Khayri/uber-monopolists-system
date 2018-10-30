@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 /*****registration*****/
 ////params : 
-// *name , *email , *password , *password_confirmation , *positionID , managerID(if positionID ==2)
+// *name , *email , *password , *password_confirmation
 Route::post('/register', 'AuthenticateController@register');
 
 /******login******/
