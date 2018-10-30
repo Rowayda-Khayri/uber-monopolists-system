@@ -14,7 +14,9 @@ class TripCounterTableSeeder extends Seeder
     {
         TripCounter::firstOrCreate([
         'id' => 1,
-        'counter' => 0
+        'general_counter' => 0,
+        'month_counter' => 0,
+        'year_counter' => 0
         ]);
     }
 }
