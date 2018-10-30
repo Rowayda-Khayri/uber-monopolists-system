@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -38,7 +37,9 @@ class DriverController extends Controller {
         Driver::find($user->id)->increment('trips_counter');
         
         //increment trips counter
-        TripCounter::find(1)->increment('counter');
+        TripCounter::orderby('created_at', 'desc')
+                ->first()
+                ->increment('counter');
         
         header('Content-Type: application/json', true);
         
