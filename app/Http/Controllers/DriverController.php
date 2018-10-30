@@ -44,9 +44,9 @@ class DriverController extends Controller {
         header('Content-Type: application/json', true);
         
         $json = response::json([
-            "msg"=>'success',
-            "errorMsgs"=> null,
-            "content"=> null
+            "msg" => 'success',
+            "errorMsgs" => null,
+            "content" => null
         ])->getContent();
 
         return stripslashes($json);
@@ -56,21 +56,27 @@ class DriverController extends Controller {
         
         //calculate monopolists
         
-        $tripsCounter = TripCounter::find(1)->get(['counter'])->first();
+        $tripsCounter = TripCounter::orderby('created_at', 'desc')
+                ->get(['counter'])
+                ->first();
         
-        $monopolists = array();
+        $monopolists = array(); //to add monopolists
         
         $drivers = Driver::query()
                 ->get([
                     'id',
+                    'name',
                     'trips_counter'
                 ]);
         
-        $monopolistCriterion = 10 * $tripsCounter->counter/ 100;
+        $monopolistCriterion = 10 * $tripsCounter->counter / 100;
         
-        foreach ($drivers as $driver) {
+        foreach ($drivers as $driver) { 
+            
+            //check if driver is a monopolist
             
             if ($driver->trips_counter >= $monopolistCriterion) {
+                
                 array_push($monopolists, $driver);
             }
         }
