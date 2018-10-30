@@ -42,7 +42,7 @@ php artisan db:seed
 ```
 ## Web Services:
 
-|      Resource        | Method |                Parameters                       |           Headers              |
+|      Route        | Method |                Parameters                       |           Headers              |
 | -------------------- | ------ | ----------------------------------------------- | ------------------------------ |
 | /register            | POST   | *email, *password, *password_confirmation, name |                &nbsp;          |
 | /login               | POST   | *email, *password                               |          &nbsp;                |
