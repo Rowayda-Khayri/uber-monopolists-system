@@ -37,15 +37,41 @@ class DriverController extends Controller {
         $newTrip->driver_id = $user->id;
         $newTrip->save();
         
-        //increment driver trips counter
-        Driver::find($user->id)
-                ->update([
-                'general_trips_counter' => DB::raw('general_trips_counter + 1'),
-                'month_trips_counter' => DB::raw('month_trips_counter + 1'),
-                'year_trips_counter' => DB::raw('year_trips_counter + 1')
-            ]);
+        //increment driver trips counters
+//        Driver::find($user->id)
+//                ->update([
+//                'general_trips_counter' => DB::raw('general_trips_counter + 1'),
+//                //check month
+//                
+////                'month_trips_counter' => DB::raw('month_trips_counter + 1'),
+////                'year_trips_counter' => DB::raw('year_trips_counter + 1')
+//            ]);
         
-        //increment trips counter
+        $currentMonth = 10;
+        $currentYear = 2018;
+        
+        $query = Driver::find($user->id);
+        
+        $query->increment('general_trips_counter');
+        
+        $query->when(
+            $query->whereMonth('updated_at', $currentMonth),
+            function ($q) {
+                return $q->increment('month_trips_counter');
+            }
+        );
+        
+        $query->when(
+            $query->whereYear('updated_at', $currentYear),
+            function ($q) {
+                return $q->increment('year_trips_counter');
+            }
+        );
+        
+        dd($query);
+        dd('done');
+        
+        //increment trips counters
         TripCounter::orderby('created_at', 'desc')
                 ->first()
                 ->update([
