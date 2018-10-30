@@ -28,6 +28,9 @@ class DriverController extends Controller {
         
         $user = $jwtAuth->toUser($jwtAuth->getToken());
         
+        $errors = json_decode("{}"); // to return it as empty object not string if there are no errors
+        $content = json_decode("{}"); // to return it as empty object not string if there is no content
+        
         //create new trip instance
         $newTrip = new Trip();
         $newTrip->driver_id = $user->id;
@@ -45,14 +48,17 @@ class DriverController extends Controller {
         
         $json = response::json([
             "msg" => 'success',
-            "errorMsgs" => null,
-            "content" => null
+            "errorMsgs" => $errors,
+            "content" => $content
         ])->getContent();
 
         return stripslashes($json);
     }
     
     public function getMonopolists($time) {
+        
+        $errors = json_decode("{}"); // to return it as empty object not string if there are no errors
+        $content = json_decode("{}"); // to return it as empty object not string if there is no content
         
         //calculate monopolists
         
@@ -89,14 +95,13 @@ class DriverController extends Controller {
 //            
 //        }
         
-        $content = json_decode("{}"); // to return it as empty object not string if there is no content
         $content->monopolists = $monopolists;
         
         header('Content-Type: application/json', true);
         
         $json = response::json([
             "msg"=>'success',
-            "errorMsgs"=> null,
+            "errorMsgs"=> $errors,
             "content"=> $content
         ])->getContent();
     

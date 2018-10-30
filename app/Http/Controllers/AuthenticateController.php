@@ -137,14 +137,17 @@ class AuthenticateController extends Controller {
     
     public function logout(JWTAuth $jwtAuth) {
         
+        $errors = json_decode("{}"); // to return it as empty object not string if there are no errors
+        $content = json_decode("{}"); // to return it as empty object not string if there is no content
+        
         JWTAuth::invalidate(JWTAuth::getToken());
         
         header('Content-Type: application/json', true);
         
         $json = response::json([
             "msg" => 'success',
-            "errorMsgs" => null,
-            "content" => null
+            "errorMsgs" => $errors,
+            "content" => $content
         ])->getContent();
         
         return stripslashes($json);
