@@ -122,6 +122,12 @@ class DriverController extends Controller {
         
         $tripCounter->increment('general_counter');
         
+        //update monopolists live list
+        
+        $monopolists = $this->getMonopolists(3);
+        
+        event(new \App\Events\MonopolistsUpdate($monopolists));
+        
         header('Content-Type: application/json', true);
         
         $json = response::json([
