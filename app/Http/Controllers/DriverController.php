@@ -140,30 +140,64 @@ class DriverController extends Controller {
         $content = json_decode("{}"); // to return it as empty object not string if there is no content
         
         //calculate monopolists
-        
-        $tripsCounter = TripCounter::orderby('created_at', 'desc')
-                ->get(['counter'])
+
+        if ($time == 1) { //month
+            
+            $tripsCounter = TripCounter::orderby('created_at', 'desc')
+                ->get(['month_counter'])
                 ->first();
+            
+            $monopolistCriterion = 10 * $tripsCounter->counter / 100;
         
-        $monopolistCriterion = 10 * $tripsCounter->counter / 100;
+            //get monopolists
+
+            $monopolists = Driver::query()
+                    ->where('month_trips_counter', '>=', $monopolistCriterion)
+                    ->get([
+                        'id',
+                        'name',
+                        'month_trips_counter'
+                    ]);
+            
+        } else if ($time ==2) { //year
+            
+            $tripsCounter = TripCounter::orderby('created_at', 'desc')
+                ->get(['year_counter'])
+                ->first();
+            
+            $monopolistCriterion = 10 * $tripsCounter->counter / 100;
         
-//        if ($time == 1) { //month
-//            
-//        }else if ($time ==2) { //year
-//            
-//        }else { //all time
-//            
-//        }
+            //get monopolists
+
+            $monopolists = Driver::query()
+                    ->where('year_trips_counter', '>=', $monopolistCriterion)
+                    ->get([
+                        'id',
+                        'name',
+                        'year_trips_counter'
+                    ]);
+            
+        } else if ($time ==3) { //all time
+            
+            $tripsCounter = TripCounter::orderby('created_at', 'desc')
+                ->get(['general_counter'])
+                ->first();
+            
+            $monopolistCriterion = 10 * $tripsCounter->counter / 100;
         
-        //get monopolists
-        
-        $monopolists = Driver::query()
-                ->where('trips_counter', '>=', $monopolistCriterion)
-                ->get([
-                    'id',
-                    'name',
-                    'trips_counter'
-                ]);
+            //get monopolists
+
+            $monopolists = Driver::query()
+                    ->where('general_trips_counter', '>=', $monopolistCriterion)
+                    ->get([
+                        'id',
+                        'name',
+                        'general_trips_counter'
+                    ]);
+        } else {
+                
+            
+        }
         
         $content->monopolists = $monopolists;
         
