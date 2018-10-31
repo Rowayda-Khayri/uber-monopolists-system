@@ -28,6 +28,12 @@ DB_DATABASE=db_name
 DB_USERNAME=db_username
 DB_PASSWORD=db_password
 ```
+- Create a Pusher app and add its credentials to .env:
+```
+PUSHER_KEY=xxxxxxxxxxxxxxxxxxxx
+PUSHER_SECRET=xxxxxxxxxxxxxxxxxxxx
+PUSHER_APP_ID=xxxxxx
+```
 - Now, your app is ready to use:
 ```
 php artisan serve
