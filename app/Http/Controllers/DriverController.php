@@ -195,7 +195,8 @@ class DriverController extends Controller {
                         'general_trips_counter'
                     ]);
         } else {
-                
+            
+            abort(404); 
             
         }
         
