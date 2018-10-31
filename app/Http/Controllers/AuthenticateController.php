@@ -64,7 +64,6 @@ class AuthenticateController extends Controller {
             ])->getContent();
         
             return stripslashes($json);
-
         } else {
             
             // validation successful
@@ -79,9 +78,7 @@ class AuthenticateController extends Controller {
             Driver::create($newDriver);
             
             return $this->login($request);
-
         }
-
     }
     
     public function login(Request $request) {
@@ -151,9 +148,7 @@ class AuthenticateController extends Controller {
         ])->getContent();
         
         return stripslashes($json);
-
     }
-    
 }
 
 

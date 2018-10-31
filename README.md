@@ -13,10 +13,10 @@
 
 - First, you should clone this repo on your document root.
 
-- Run the following command:
+- Install Composer dependencies:
 
 ```
-composer update
+composer install
 ```
 - Rename .env.example to .env and run the following command:  
 ```
@@ -36,7 +36,7 @@ php artisan serve
 ```
 php artisan migrate
 ```
-- Run Seeds:
+- Seed the database:
 ```
 php artisan db:seed
 ```

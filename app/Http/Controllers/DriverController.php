@@ -81,7 +81,6 @@ class DriverController extends Controller {
         
         $driver->increment('general_trips_counter');
         
-        
         /*=============================================*/
         /**********increment trips counters************/
         /*=============================================*/
@@ -144,8 +143,8 @@ class DriverController extends Controller {
         if ($time == 1) { //month
             
             $tripsCounter = TripCounter::orderby('created_at', 'desc')
-                ->get(['month_counter'])
-                ->first();
+                    ->get(['month_counter'])
+                    ->first();
             
             $monopolistCriterion = 10 * $tripsCounter->counter / 100;
         
@@ -158,12 +157,11 @@ class DriverController extends Controller {
                         'name',
                         'month_trips_counter'
                     ]);
-            
         } else if ($time ==2) { //year
             
             $tripsCounter = TripCounter::orderby('created_at', 'desc')
-                ->get(['year_counter'])
-                ->first();
+                    ->get(['year_counter'])
+                    ->first();
             
             $monopolistCriterion = 10 * $tripsCounter->counter / 100;
         
@@ -176,12 +174,11 @@ class DriverController extends Controller {
                         'name',
                         'year_trips_counter'
                     ]);
-            
         } else if ($time ==3) { //all time
             
             $tripsCounter = TripCounter::orderby('created_at', 'desc')
-                ->get(['general_counter'])
-                ->first();
+                    ->get(['general_counter'])
+                    ->first();
             
             $monopolistCriterion = 10 * $tripsCounter->counter / 100;
         
@@ -196,8 +193,7 @@ class DriverController extends Controller {
                     ]);
         } else {
             
-            abort(404); 
-            
+            abort(404);
         }
         
         $content->monopolists = $monopolists;
@@ -212,5 +208,4 @@ class DriverController extends Controller {
     
         return stripslashes($json);
     }
-           
 }
