@@ -1,3 +1,24 @@
+ Uber drivers are very eager to achieve the best targets in number of trips. It is a
+good thing for Uber and for the drivers. But Uber is a well developed and
+educated company that wants to know if some of the drivers are monopolists in
+this competition. So that Uber decided to create a system that will detect and
+display drivers who have made more than or equal to 10% of the trips. It also
+wants this information on three levels; who exceeded 10% this month, this year,
+and all time.
+ They want to maintain a LIVE list so that anyone opens Uber website will see the
+updated list.
+ There are some requirements for this goal to be achieved:
+ 1- Uber needs a web service that the driver app will use to inform the system that
+the driver made another trip. It uses POST method and it doesn't need any
+parameters. Each call to this service means another trip for the calling driver. This
+web function can only be accessed using the driver's credentials.
+2- Another web service is needed that gets the current list of monopolists.
+ Features:
+1- List of drivers exceeding 10% of the trips this month
+2- List of drivers exceeding 10% of the trips this year
+3- List of drivers exceeding 10% of the trips all time
+
+
 ## Server Requirements:
 
 - PHP >= 7.1.3
